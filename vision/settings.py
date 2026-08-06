@@ -1,3 +1,5 @@
+#Yolo Model settings
+
 
 MODEL_PATH = "models/TestModel.pt"
 

@@ -1,6 +1,7 @@
 from camera.camera import Camera
 from vision.detector import Detector
 from vision.prediction import PredictionParser
+from vision.draw import Draw
 import cv2
 
 
@@ -10,6 +11,7 @@ def main():
     camera = Camera()
     detector = Detector()
     parser = PredictionParser()
+    drawer = Draw()
 
     # open camera 
     if not camera.open():
@@ -39,16 +41,17 @@ def main():
 
         #load model results 
         results = detector.detect(frame)
-        annotated_frame = results[0].plot()
-        prediction = parser.parse(results)
+        predictions = parser.parse(results)
+        annotated_frame = drawer.draw(frame,predictions)
+
 
         #Show information about what yolo sees
         if frame_count %30 == 0:
 
-            if prediction: 
+            if predictions: 
 
                 print("\n========================== Yolo DETECTION =============================")
-                for prediction in prediction:
+                for prediction in predictions:
                     print(
                         f"Class: {prediction.class_name} | "
                         f"Confidence: {prediction.confidence:.2%} | "
@@ -57,8 +60,9 @@ def main():
                         f"-> "
                         f"({prediction.x2}, {prediction.y2})"
                     )
-                print("=====================================================================\n")
+                print("=========================================================================\n")
             else :
+                #if nothing print nothing LOL
                 print("Nothing detected")
 
         #show camera image with boxes

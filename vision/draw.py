@@ -6,7 +6,7 @@ class Draw:
     # This class is rensposible for creating bouding boxes on frame and colors
 
     def __init__(self):
-
+        #box configuration and confidence configuration
         self.box_thickned = settings.BOX_THICKNESS
         self.font_scale = settings.FONT_SCALE
         self.text_style = settings.TEXT_STYLE

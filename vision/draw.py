@@ -1,17 +1,27 @@
 import cv2
+from . import settings
 
 
 class Draw:
+    # This class is rensposible for creating bouding boxes on frame and colors
 
+    def __init__(self):
+
+        self.box_thickned = settings.BOX_THICKNESS
+        self.font_scale = settings.FONT_SCALE
+        self.text_style = settings.TEXT_STYLE
+        self.text_thickness = settings.TEXT_THICKNESS
+        self.medium_confidence = settings.MEDIUM_CONFIDENCE
+        self.low_confidence = settings.LOW_CONFIDENCE
 
     #Depending on confidece change color of  annotated_frame and label
     def get_color(self,confidence):
 
-        if confidence < 0.5:
+        if confidence < self.low_confidence :
 
             return(0,0,255) # Red Color
         
-        elif confidence < 0.8:
+        elif confidence <  self.medium_confidence:
 
             return(0,255,255) # Yellow Color
 
@@ -63,7 +73,7 @@ class Draw:
                 (x1, y1), # Object cordinates
                 (x2, y2),
                 (color), # colot ob the object rectangle 
-                2 # thickness of bounding box
+                self.box_thickned# thickness of bounding box
             )
 
             label = (
@@ -78,10 +88,10 @@ class Draw:
                 annotated_frame,
                 label,
                 (prediction.x1, prediction.y1 - 10), # Text position on bounding box
-                cv2.FONT_HERSHEY_SIMPLEX, # Text font 
-                0.6, # Text size 
+                self.text_style, # Text font 
+                self.font_scale, # Text size 
                 color, # Text color
-                2 # Text thickness
+                self.text_thickness  # Text thickness
             )
 
         return annotated_frame

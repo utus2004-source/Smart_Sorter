@@ -1,10 +1,11 @@
-from  modelTest.modelTest import ModelOuput
+from modelTest.modelTest import ModelOuput
 from camera.camera import Camera
 from vision.detector import Detector
 from vision.prediction import PredictionParser
 from vision.draw import Draw
 from vision.filter import PredictionFilter
 from vision.stabilization import PredictionStabilizier
+from control.decision import Decision
 import cv2
 
 
@@ -15,8 +16,8 @@ def main():
     detector = Detector()
     parser = PredictionParser()
     drawer = Draw()
-    prediction_filter = PredictionFilter()
     stabilization = PredictionStabilizier()
+    decision = Decision()
     model_output = ModelOuput()
 
 
@@ -48,14 +49,15 @@ def main():
         #load model results 
         results = detector.detect(frame)
         predictions = parser.parse(results)
-        filtered_prediction = prediction_filter.filter(predictions)
-        stable_class = stabilization.update(filtered_prediction)     
+        stable_class = stabilization.update(predictions)
+        decision_result = decision.decide(stable_class)
         
-        annotated_frame = drawer.draw(frame,filtered_prediction)
+        annotated_frame = drawer.draw(frame,predictions)
 
         #Show information about what yolo sees
         if frame_count %30 == 0:
             model_output.ModelCheck(predictions)
+            print(decision_result)
         
         #show camera image with boxes
         cv2.imshow("Smart Bin Camera",annotated_frame)

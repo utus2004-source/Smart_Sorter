@@ -6,7 +6,8 @@ class PredictionFilter:
     #main resbonsibility is too filter low confident class
 
     def __init__(self):
-        self.threshold = settings.CONFIDENCE_THRESHOLD
+
+        self.threshold = 0.1
 
     def filter(self, predictions):
 

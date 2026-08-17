@@ -1,11 +1,7 @@
 #Yolo Model settings
 import cv2
 
-
 MODEL_PATH = "models/TestModel.pt"
-
-CONFIDENCE = 0.5
-
 IMAGE_SIZE = 640
 
 #image settings 
@@ -15,7 +11,7 @@ TEXT_THICKNESS = 2
 TEXT_STYLE = cv2.FONT_HERSHEY_SIMPLEX
 
 # Confidence settings
-CONFIDENCE_THRESHOLD = 0.5
+CONFIDENCE = 0.5
 LOW_CONFIDENCE= 0.5
 MEDIUM_CONFIDENCE = 0.8
 

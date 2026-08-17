@@ -1,7 +1,7 @@
 
 class ModelOuput:
 
-    def ModelCheck(slef,predictions):
+    def ModelCheck(self,predictions):
         
         if predictions: 
 

@@ -1,0 +1,46 @@
+# Central configuration file for the whole system.
+# Laptop and Raspberry Pi run the same code and only differ by this file.
+
+camera:
+  type: opencv              # camera implementation to use
+  camera_id: 0
+  width: 640
+  height: 640
+  fps: 30
+
+model:
+  type: yolo                # detector implementation to use
+  path: models/model.pt     # relative to the project root
+  confidence: 0.5
+  image_size: 640
+
+# Region of interest: only objects inside this box are taken into account.
+roi:
+  x1: 100
+  y1: 100
+  x2: 540
+  y2: 540
+
+stabilization:
+  frames: 5                 # how many frames are kept in history
+  threshold: 0.6            # required agreement inside the history
+
+decision_filter:
+  cooldown_frames: 30       # minimum number of frames between two sends
+  send_only_on_change: true # do not send the same decision twice in a row
+
+display:
+  enabled: true             # set to false on a headless Raspberry Pi
+  window_name: Smart_Bin_Camera
+  debug_log_every: 30       # print model output every N frames
+  box_thickness: 2
+  font_scale: 0.6
+  text_thickness: 2
+  low_confidence: 0.5       # below this the box is drawn red
+  medium_confidence: 0.8    # below this the box is drawn yellow, above it green
+
+communication:
+  enabled: false            # set to true when the ESP32 is connected
+  type: serial
+  port: /dev/ttyUSB0
+  baudrate: 115200

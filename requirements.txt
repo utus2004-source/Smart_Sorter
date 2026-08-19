@@ -1,0 +1,6 @@
+# In this file you can find used versions of libraries and hardware requirments.
+ultralytics
+opencv-python
+pyyaml
+pyserial
+pytest

@@ -1,0 +1,6 @@
+# Maps the class names produced by the model to bin numbers.
+# The keys must match the class names of the trained model exactly.
+classes:
+  Glass: 1
+  Aluminium_Metal: 2
+  Plastic: 3

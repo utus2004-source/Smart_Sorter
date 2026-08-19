@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 *.pt
 .vscode/
+claude.md
+*.claude.md

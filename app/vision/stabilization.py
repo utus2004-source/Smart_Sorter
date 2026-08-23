@@ -49,9 +49,12 @@ class PredictionStabilizer:
 
             # Return only the detections of the stable class
             return [
-                prediction
+                prediction              
                 for prediction in predictions
-                if prediction.class_name == stable_class
+
+                    if prediction.class_name == stable_class
+
+
             ]
 
         return []

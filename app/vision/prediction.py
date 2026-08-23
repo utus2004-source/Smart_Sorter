@@ -1,5 +1,4 @@
 class Prediction:
-    # Our own standard detection format.
     # Its responsibilities are:
     # - Store the detected object's class id and class name.
     # - Store the confidence score.

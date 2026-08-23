@@ -1,6 +1,5 @@
 class Detector:
     # Interface for every detector implementation.
-    # The pipeline does not know whether YOLO, TFLite or TensorRT
     # is running behind this interface.
 
     def load_model(self):

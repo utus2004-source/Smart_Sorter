@@ -1,8 +1,6 @@
 class VisionPipeline:
-    # Orchestrator.
     # It only defines the order of the steps and works on the interfaces,
-    # it does not implement camera, model, ROI, stabilization,
-    # decision, communication or drawing logic.
+    #for more clean code
 
     def __init__(
         self,

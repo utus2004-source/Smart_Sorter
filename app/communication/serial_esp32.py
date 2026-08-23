@@ -7,7 +7,6 @@ class SerialESP32(Communication):
     # - Open the serial connection to the ESP32
     # - Send a ready command
     # - Close the connection
-    # It knows nothing about YOLO, predictions or the Smart Bin logic.
 
     def __init__(self, config):
 

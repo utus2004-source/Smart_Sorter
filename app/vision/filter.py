@@ -1,7 +1,5 @@
 class ROIFilter:
     # Spatial filter.
-    # Answers one question: is the detected object inside the area
-    # where the system should take it into account?
     # Prediction[] -> Prediction[]
 
     def __init__(self, config):
@@ -36,7 +34,6 @@ class ROIFilter:
 class DecisionFilter:
     # Second, independent filter.
     # It does not recognise anything, it only answers:
-    # should this ready decision be sent to the ESP32 right now?
     # decision -> decision or None
 
     def __init__(self, config):

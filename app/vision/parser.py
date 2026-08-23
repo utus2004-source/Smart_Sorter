@@ -3,7 +3,6 @@ from .prediction import Prediction
 
 class PredictionParser:
     # Border between the concrete model and the rest of the system.
-    # This is the only place besides the detector that knows Ultralytics.
     # Its responsibilities are:
     # - Read the raw YOLO results
     # - Extract the required detection information

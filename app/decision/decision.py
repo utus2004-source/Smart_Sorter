@@ -1,7 +1,6 @@
 class Decision:
     # Smart Bin logic.
     # Takes stable detections and returns the bin number the system
-    # should use. It knows nothing about the camera, the model or the ESP32.
     # Prediction[] -> bin number or None
 
     def __init__(self, classes):

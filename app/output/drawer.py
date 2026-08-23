@@ -6,7 +6,6 @@ class Drawer:
     # Draws bounding boxes, class names, confidence and the ROI so that
     # the camera and the model can be debugged. It never takes decisions
     # and never influences the logical pipeline.
-    # It can be switched off completely on a Raspberry Pi.
 
     def __init__(self, display_config, roi_config):
 

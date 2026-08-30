@@ -50,3 +50,31 @@ def test_highest_confidence_wins_in_one_frame():
     ])
 
     assert result[0].class_name == "Plastic"
+
+def test_empty_frames_outvote_the_old_class():
+
+    stabilizer = PredictionStabilizer(CONFIG)
+
+    for _ in range(5):
+        stabilizer.update([make_prediction("Plastic")])
+
+    # The object left the drop zone
+    for _ in range(3):
+        stabilizer.update([])
+
+    # Three empty frames out of five - no decision any more
+    assert stabilizer.update([make_prediction("Plastic")]) == []
+
+
+
+
+    stabilizer = PredictionStabilizer(CONFIG)
+
+    for _ in range(5):
+        stabilizer.update([make_prediction("Plastic")])
+
+    for _ in range(50):
+        stabilizer.update([])
+
+    # A single frame must not be enough to decide again
+    assert stabilizer.update([make_prediction("Plastic")]) == []

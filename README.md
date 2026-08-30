@@ -1,6 +1,7 @@
 # Smart Sorter
 
-Vision system for an automatic waste sorting bin.
+Vision system for an automatic waste sorting bin. The whole logic and pipline is made in an maner to change models
+and requirments so it doesntl need to to sort wwaste it can detect faces and gove the same result 
 
 A camera watches the drop zone of the bin, a YOLO model recognises the material
 of the object that was thrown in, and the system sends a single bin number over
@@ -27,7 +28,7 @@ project is split the way it is.
 | 6 | **Every implementation is swappable.** USB camera → Pi camera, YOLO → another detector, serial → MQTT. | `Camera`, `Detector`, `Communication` are interfaces (`base.py` / `detector.py`), concrete classes implement them. |
 | 7 | **Display is debug only.** | `Drawer` never influences the pipeline and can be switched off (`display.enabled: false`) for a headless Pi. |
 | 8 | **No behaviour is hardcoded.** Thresholds, ROI, ports, colours — all tunable. | Single `config/config.yaml`, loaded by `app/config.py`. |
-| 9 | **The logic is testable without a camera and without hardware.** | Pure functions on `Prediction` objects, covered by `pytest` with fake YOLO results. |
+| 9 | **The logic is testable without a camera and without hardware.** | Pure functions on `Prediction` objects, covered by `pytest` with fake YOLO results.The same for `Communication` |
 
 ---
 
@@ -129,7 +130,8 @@ camera frame
 
 `Drawer` and `ModelLogger` hang off the side of the pipeline: they receive
 **all** detections (including the ones rejected by the ROI) so a badly set ROI
-is visible on the image, but they never affect the decision.
+is visible on the image, but they never affect the decision,it main purpose is to
+configurate the camera position and check how model behaves
 
 ### Data model
 
@@ -254,7 +256,8 @@ decision is already active.
 | Different sensitivity | change `confidence`, `stabilization`, `roi` in `config.yaml` — no code change |
 
 Nothing above requires touching `VisionPipeline`, which is the point of the
-interface split.
+interface split.touching the `VisionPipeline` will be required only when the system will need to run on more than
+1 camera.
 
 ---
 

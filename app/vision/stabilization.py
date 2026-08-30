@@ -13,15 +13,18 @@ class PredictionStabilizer:
 
     def update(self, predictions):
 
-        if not predictions:
-            return []
 
-        best_prediction = max(
-            predictions,
-            key=lambda prediction: prediction.confidence
-        )
+        if predictions :
 
-        self.history.append(best_prediction.class_name)
+            best_prediction = max(
+                predictions,
+                key=lambda prediction: prediction.confidence
+            )
+
+            self.history.append(best_prediction.class_name)
+        else:
+            #adding epmpty frames to take part in decision
+            self.history.append(None)
 
         # Keep only the last N frames
         if len(self.history) > self.max_history:
@@ -42,6 +45,9 @@ class PredictionStabilizer:
             class_counts,
             key=class_counts.get
         )
+        #if epmty frames are more commom return none
+        if stable_class is None:
+            return []
 
         count = class_counts[stable_class]
 
@@ -55,8 +61,6 @@ class PredictionStabilizer:
                 for prediction in predictions
 
                     if prediction.class_name == stable_class
-
-
             ]
 
         return []

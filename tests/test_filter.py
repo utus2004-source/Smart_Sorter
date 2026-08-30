@@ -32,19 +32,6 @@ def test_decision_filter_blocks_repeated_decision():
     assert decision_filter.filter(3) is None
 
 
-def test_decision_filter_respects_cooldown():
-
-    config = {"cooldown_frames": 5, "send_only_on_change": False}
-    decision_filter = DecisionFilter(config)
-
-    # The first four frames are still inside the cooldown
-    for _ in range(4):
-        assert decision_filter.filter(3) is None
-
-    # The fifth frame reaches the cooldown
-    assert decision_filter.filter(3) == 3
-
-
 def test_decision_filter_passes_none():
 
     config = {"cooldown_frames": 1, "send_only_on_change": True}

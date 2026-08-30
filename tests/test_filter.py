@@ -32,12 +32,22 @@ def test_decision_filter_blocks_repeated_decision():
     assert decision_filter.filter(3) is None
 
 
-def test_decision_filter_respects_cooldown():
+def test_decision_filter_passes_none():
 
+    config = {"cooldown_frames": 1, "send_only_on_change": True}
+
+    assert DecisionFilter(config).filter(None) is None
+
+
+def test_decision_filter_respect_cooldown():
+    
     config = {"cooldown_frames": 5, "send_only_on_change": False}
     decision_filter = DecisionFilter(config)
 
-    # The first four frames are still inside the cooldown
+    # The first object is sent immediately
+    assert decision_filter.filter(3) == 3
+
+    # The next four frames are still inside the cooldown
     for _ in range(4):
         assert decision_filter.filter(3) is None
 
@@ -45,8 +55,31 @@ def test_decision_filter_respects_cooldown():
     assert decision_filter.filter(3) == 3
 
 
-def test_decision_filter_passes_none():
+def test_decision_filter_sends_same_class_again_after_a_gap():
 
-    config = {"cooldown_frames": 1, "send_only_on_change": True}
+    config = {"cooldown_frames": 5, "send_only_on_change": True}
+    decision_filter = DecisionFilter(config)
 
-    assert DecisionFilter(config).filter(None) is None
+    assert decision_filter.filter(3) == 3
+
+    # The drop zone stays empty long enough for the object to be forgotten
+    for _ in range(5):
+        assert decision_filter.filter(None) is None
+
+    # A second object of the same class must be sent again
+    assert decision_filter.filter(3) == 3
+
+
+def test_decision_filter_ignores_flickering_detection():
+
+    config = {"cooldown_frames": 5, "send_only_on_change": True}
+    decision_filter = DecisionFilter(config)
+
+    sent = []
+
+    # The object never leaves, the model only drops it every second frame
+    for frame in range(100):
+        sent.append(decision_filter.filter(3 if frame % 2 == 0 else None))
+
+    # Single empty frames must not count as "the object left"
+    assert [command for command in sent if command is not None] == [3]

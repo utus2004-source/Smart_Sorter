@@ -1,3 +1,4 @@
+
 class PredictionStabilizer:
     # Time filter.
     # A single frame can produce a wrong class, so a class is passed
@@ -44,12 +45,13 @@ class PredictionStabilizer:
 
         count = class_counts[stable_class]
 
-        # Check if the class is stable enough
-        if count / len(self.history) >= self.threshold:
+        # Check if the class is stable enough 
+        if (count / len(self.history) >= self.threshold) and (len(self.history) == self.max_history): # added max history for tets
 
             # Return only the detections of the stable class
             return [
-                prediction              
+                prediction           
+                
                 for prediction in predictions
 
                     if prediction.class_name == stable_class

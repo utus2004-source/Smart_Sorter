@@ -1,6 +1,5 @@
 class Communication:
     # Interface for every communication implementation.
-    # The decision logic never talks to the hardware directly,
     # it only produces a command that is passed here.
 
     def connect(self):

@@ -44,16 +44,36 @@ class DecisionFilter:
         # Last decision that was actually let through
         self.last_sent = None
 
-        # Frames counted since the last send
-        self.frames_since_send = 0
+        # Frames counted since the last send.
+        # Starts at the full cooldown, so the first object after startup
+        # is sent at once - there is nothing to cool down yet.
+        self.frames_since_send = self.cooldown_frames
+
+        # Consecutive frames with no decision at all
+        self.empty_frames = 0
 
     def filter(self, decision):
 
         self.frames_since_send += 1
 
-        # Nothing to send
+        # Nothing in the drop zone
         if decision is None:
+
+            self.empty_frames += 1
+
+            # The zone stayed empty for a whole cooldown, so the object is
+            # really gone and the next one counts as a new object. Without
+            # this the same class thrown twice in a row would be blocked
+            # forever by send_only_on_change.
+            if self.empty_frames >= self.cooldown_frames:
+                self.last_sent = None
+                self.empty_frames = 0
+
             return None
+
+        # Something is in the zone again - only consecutive empty frames
+        # mean "the object left", so the counter starts from scratch.
+        self.empty_frames = 0
 
         # Block sending the same decision again
         if self.send_only_on_change and decision == self.last_sent:

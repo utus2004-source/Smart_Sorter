@@ -1,4 +1,5 @@
 from ultralytics import YOLO
+
 from .detector import Detector
 
 

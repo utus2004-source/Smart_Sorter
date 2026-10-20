@@ -10,7 +10,7 @@ camera:
 
 model:
   type: yolo                # detector implementation to use
-  path: models/model.pt     # relative to the project root
+  path: models/model.pt   # relative to the project root
   confidence: 0.5
   image_size: 640
 

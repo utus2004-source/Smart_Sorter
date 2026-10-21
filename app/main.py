@@ -8,6 +8,7 @@ from app.decision.decision import Decision
 from app.output.drawer import Drawer
 from app.output.model_logger import ModelLogger
 from app.communication.serial_esp32 import SerialESP32
+from app.communication.mqtt_esp32 import MqttESP32
 from app.pipeline.vision_pipeline import VisionPipeline
 
 
@@ -28,6 +29,15 @@ def check_classes(detector, classes):
         print(f"WARNING: classes.yaml has no entry for: {missing}")
 
 
+def create_communication(config):
+    # The type in config.yaml decides how the bin number reaches the ESP32
+
+    if config["type"] == "mqtt":
+        return MqttESP32(config)
+
+    return SerialESP32(config)
+
+
 def main():
 
     # load configuration
@@ -41,7 +51,7 @@ def main():
     stabilization = PredictionStabilizer(config.stabilization)
     decision = Decision(config.classes)
     decision_filter = DecisionFilter(config.decision_filter)
-    communication = SerialESP32(config.communication)
+    communication = create_communication(config.communication)
     drawer = Drawer(config.display, config.roi)
     logger = ModelLogger()
 

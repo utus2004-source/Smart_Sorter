@@ -41,6 +41,13 @@ display:
 
 communication:
   enabled: false            # set to true when the ESP32 is connected
-  type: serial
+  type: mqtt                # serial or mqtt
+  # serial
   port: /dev/ttyUSB0
   baudrate: 115200
+  # mqtt
+  broker: localhost         # the broker runs on the Raspberry Pi itself
+  broker_port: 1883
+  topic: smart_sorter/bin
+  username: ""
+  password: ""

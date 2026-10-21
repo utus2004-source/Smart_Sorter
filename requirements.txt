@@ -3,4 +3,5 @@ ultralytics
 opencv-python
 pyyaml
 pyserial
+paho-mqtt>=2.0
 pytest

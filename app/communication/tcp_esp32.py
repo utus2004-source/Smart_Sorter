@@ -1,5 +1,7 @@
 from .base import Communication
+import json
 import socket
+import time
 
 class TcpESP32(Communication):
     # Responsibilities:
@@ -26,7 +28,7 @@ class TcpESP32(Communication):
 
         #Try connecting to the Host
         try : 
-            self.connection =   self.connection = socket.create_connection((self.host, self.port),self.connection_timeout)
+            self.connection = socket.create_connection((self.host, self.port),self.connection_timeout)
         except  OSError as error:
             print (f"Could not connect to host with IP {self.host} on port {self.port} it erro is :{error}") 
             return False
@@ -35,20 +37,28 @@ class TcpESP32(Communication):
         print(f"{self.host} is connected on port {self.port}") 
         return True
 
+
+    def build_message(self,command):
+
+        message = {
+            "type" : "sort",
+            "bin": command,
+            "timestamp": int((time.time()) * 1000),
+        }
+        return "STX" + json.dumps(message) + "STX"+"\n" 
+
+
     def send(self, command):
 
         if self.connection is None:
-            return
+            return          
 
-        command = "Ziorbo przestań mi rodzine prześladować :)"
         try:
-            self.connection.sendall(f"{command}\n".encode())
+            self.connection.sendall(command.encode())
         except OSError as error:
         
             print(f"Could not send command to ESP32: {error}")
             self.close()
-
-
 
     def close(self):
 

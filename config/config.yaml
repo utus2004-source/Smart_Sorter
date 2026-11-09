@@ -40,7 +40,7 @@ display:
   medium_confidence: 0.8    # below this the box is drawn yellow, above it green
 
 communication:
-  enabled: true               # set to true when the ESP32 is connected
+  enabled: false               # set to true when the ESP32 is connected
   timeout: 30      # seconds to wait when connecting to the ESP32
   type: tcp                 # serial, mqtt or tcp
   # serial

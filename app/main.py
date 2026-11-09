@@ -8,7 +8,7 @@ from app.decision.decision import Decision
 from app.output.drawer import Drawer
 from app.output.model_logger import ModelLogger
 from app.communication.serial_esp32 import SerialESP32
-from app.communication.mqtt_esp32 import MqttESP32
+from app.communication.tcp_esp32 import TcpESP32
 from app.pipeline.vision_pipeline import VisionPipeline
 
 
@@ -32,8 +32,8 @@ def check_classes(detector, classes):
 def create_communication(config):
     # The type in config.yaml decides how the bin number reaches the ESP32
 
-    if config["type"] == "mqtt":
-        return MqttESP32(config)
+    if config["type"] == "tcp":
+        return TcpESP32(config)
 
     return SerialESP32(config)
 

@@ -4,3 +4,4 @@ __pycache__/
 .vscode/
 claude.md
 *.claude.md
+*.pt

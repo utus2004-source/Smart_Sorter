@@ -45,7 +45,7 @@ class TcpESP32(Communication):
             "bin": command,
             "timestamp": int((time.time()) * 1000),
         }
-        return "STX" + json.dumps(message) + "STX"+"\n" 
+        return "STX" + json.dumps(message) + "ETX"+"\n" 
 
 
     def send(self, command):
